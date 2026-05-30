@@ -114,10 +114,23 @@ export default function AdminPedidosPage() {
                   </div>
 
                   <div className="space-y-2 text-lg text-[#2c2020]">
-  <p>
-    <span className="font-bold text-[#6f2b2f]">Total:</span>{" "}
-    ${order.total}
-  </p>
+                    {order.discountCode && (
+  <>
+                 <p className="text-green-700">
+                  <span className="font-bold">Código:</span>{" "}
+                  {order.discountCode} ({order.discountPercentage}%)
+                  </p>
+
+    <p className="text-green-700">
+      <span className="font-bold">Descuento:</span>{" "}
+      -${order.discountAmount}
+    </p>
+  </>
+)}
+                    <p>
+                      <span className="font-bold text-[#6f2b2f]">Total:</span>{" "}
+                      ${order.total}
+                       </p>
 
   <p>
     <span className="font-bold text-[#6f2b2f]">Entrega:</span>{" "}
