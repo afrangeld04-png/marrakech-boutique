@@ -149,6 +149,31 @@ export default function Home() {
   const [paymentMethod, setPaymentMethod] = useState("");
   const [customerName, setCustomerName] = useState("");
   const [customerPhone, setCustomerPhone] = useState("");
+  const [discountCode, setDiscountCode] = useState("");
+const [discount, setDiscount] = useState(null);
+
+const discountCodes = {
+  NICOLETTE10: 10,
+  ATELIER25: 15,
+  COMPANY5: 5,
+  MARRAKECH: 25,
+};
+
+
+
+function applyDiscountCode() {
+  const code = discountCode.trim().toUpperCase();
+
+  if (discountCodes[code]) {
+    setDiscount({
+      code,
+      percentage: discountCodes[code],
+    });
+  } else {
+    setDiscount(null);
+    alert("Código de descuento no válido");
+  }
+}
   const router = useRouter();
 
 const [logoClicks, setLogoClicks] = useState(0);
@@ -205,6 +230,13 @@ function handleSecretAdmin() {
   }, [products, category, query]);
 
   const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+  const subtotal = total;
+
+const discountAmount = discount
+  ? subtotal * (discount.percentage / 100)
+  : 0;
+
+const finalTotal = subtotal - discountAmount;
   const count = cart.reduce((sum, item) => sum + item.qty, 0);
 
   function addToCart(product) {
@@ -247,7 +279,11 @@ const sendOrder = async () => {
         price: item.price,
         qty: item.qty,
       })),
-      total,
+      subtotal,
+      discountCode: discount?.code || "",
+      discountPercentage: discount?.percentage || 0,
+      discountAmount,
+      total: finalTotal,
       status: "Pendiente",
       createdAt: serverTimestamp(),
     });
@@ -277,7 +313,10 @@ ${cart
   )
   .join("\n")}
 
-Total aproximado: ${money(total)}
+Subtotal: ${money(subtotal)}
+${discount ? `Código aplicado: ${discount.code} (${discount.percentage}%)
+Descuento: -${money(discountAmount)}` : ""}
+Total final: ${money(finalTotal)}
 
 Datos del cliente:
 Nombre: ${customerName}
@@ -913,10 +952,53 @@ Alessandra Reséndiz Díaz`
     </div>
   </div>
 
-  <div className="mt-6 mb-4 flex justify-between text-xl font-bold">
-    <span>Total</span>
-    <span>{money(total)}</span>
+ <div className="mt-6 rounded-[2rem] bg-white p-5">
+  <h3 className="mb-3 font-serif text-2xl text-[#6f2b2f]">
+    Código de descuento
+  </h3>
+
+  <div className="flex gap-2">
+    <input
+      value={discountCode}
+      onChange={(e) => setDiscountCode(e.target.value)}
+      placeholder="Ej. Nicolette10"
+      className="w-full rounded-2xl border border-[#6f2b2f]/20 p-3 text-[#6f2b2f] outline-none"
+    />
+
+    <button
+      type="button"
+      onClick={applyDiscountCode}
+      className="rounded-full bg-[#6f2b2f] px-5 font-semibold text-white"
+    >
+      Aplicar
+    </button>
   </div>
+
+  {discount && (
+    <p className="mt-3 text-sm font-semibold text-green-700">
+      Código aplicado: {discount.code} ({discount.percentage}%)
+    </p>
+  )}
+</div>
+
+<div className="mt-6 mb-4 space-y-2 text-xl font-bold">
+  <div className="flex justify-between">
+    <span>Subtotal</span>
+    <span>{money(subtotal)}</span>
+  </div>
+
+  {discount && (
+    <div className="flex justify-between text-green-700">
+      <span>Descuento</span>
+      <span>-{money(discountAmount)}</span>
+    </div>
+  )}
+
+  <div className="flex justify-between text-2xl text-[#6f2b2f]">
+    <span>Total</span>
+    <span>{money(finalTotal)}</span>
+  </div>
+</div>
 <button
   onClick={sendOrder}
   disabled={
