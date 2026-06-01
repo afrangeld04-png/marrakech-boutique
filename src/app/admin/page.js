@@ -33,6 +33,7 @@ export default function AdminPage() {
     stock: "",
     image: "",
     description: "",
+    brand: "",
   });
 
   const [uploading, setUploading] = useState(false);
@@ -40,6 +41,45 @@ export default function AdminPage() {
   const [lowStockProducts, setLowStockProducts] = useState([]);
   const [outOfStockProducts, setOutOfStockProducts] = useState([]);
 
+const makeupBrands = [
+  "Rare Beauty",
+  "Fenty Beauty",
+  "MAC Cosmetics",
+  "Huda Beauty",
+  "Anastasia Beverly Hills",
+  "NARS",
+  "Too Faced",
+  "Urban Decay",
+  "Charlotte Tilbury",
+  "e.l.f. Cosmetics",
+  "Maybelline New York",
+  "L'Oréal Paris",
+  "NYX Professional Makeup",
+  "Revlon",
+  "Bissú",
+  "Pink Up",
+  "Beauty Creations",
+  "Rimmel London",
+  "Morphe",
+  "Benefit Cosmetics",
+  "Clinique",
+  "Estée Lauder",
+  "Lancôme",
+  "Dior Beauty",
+  "Chanel Beauty",
+  "Yves Saint Laurent Beauty",
+  "Giorgio Armani Beauty",
+  "Pat McGrath Labs",
+  "Natasha Denona",
+  "Saie",
+  "Makeup by Mario",
+  "Laura Mercier",
+  "Hourglass",
+  "Shiseido",
+  "KIKO MILANO",
+  "rhode",
+  "Patrick Ta Beauté",
+];
   const inputClass =
     "rounded-2xl bg-white border border-[#6f2b2f]/20 p-4 outline-none text-[#6f2b2f] placeholder:text-[#6f2b2f]/55 focus:border-[#6f2b2f]/60 focus:ring-2 focus:ring-[#6f2b2f]/10";
 
@@ -131,6 +171,7 @@ setLowStockProducts(lowStock);
       await addDoc(collection(db, "products"), {
         name: product.name,
         category: product.category,
+        brand: product.category === "Maquillaje" ? product.brand : "",
         price: Number(product.price),
         stock: Number(product.stock),
         image: product.image,
@@ -143,6 +184,7 @@ setLowStockProducts(lowStock);
       setProduct({
         name: "",
         category: "",
+        brand: "",
         price: "",
         stock: "",
         image: "",
@@ -315,6 +357,22 @@ setLowStockProducts(lowStock);
               <option value="Ropa y bolsas">Ropa y bolsas</option>
               <option value="Accesorios">Accesorios</option>
             </select>
+            {product.category === "Maquillaje" && (
+  <select
+    name="brand"
+    value={product.brand}
+    onChange={handleChange}
+    className={inputClass}
+  >
+    <option value="">Selecciona una marca</option>
+
+    {makeupBrands.map((brand) => (
+      <option key={brand} value={brand}>
+        {brand}
+      </option>
+    ))}
+  </select>
+)}
 
             <input
               type="number"

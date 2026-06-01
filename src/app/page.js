@@ -138,10 +138,50 @@ function money(value) {
 }
 
 export default function Home() {
+  const makeupBrands = [
+  "Rare Beauty",
+  "Fenty Beauty",
+  "MAC Cosmetics",
+  "Huda Beauty",
+  "Anastasia Beverly Hills",
+  "NARS",
+  "Too Faced",
+  "Urban Decay",
+  "Charlotte Tilbury",
+  "e.l.f. Cosmetics",
+  "Maybelline New York",
+  "L'Oréal Paris",
+  "NYX Professional Makeup",
+  "Revlon",
+  "Bissú",
+  "Pink Up",
+  "Beauty Creations",
+  "Rimmel London",
+  "Morphe",
+  "Benefit Cosmetics",
+  "Clinique",
+  "Estée Lauder",
+  "Lancôme",
+  "Dior Beauty",
+  "Chanel Beauty",
+  "Yves Saint Laurent Beauty",
+  "Giorgio Armani Beauty",
+  "Pat McGrath Labs",
+  "Natasha Denona",
+  "Saie",
+  "Makeup by Mario",
+  "Laura Mercier",
+  "Hourglass",
+  "Shiseido",
+  "KIKO MILANO",
+  "rhode",
+  "Patrick Ta Beauté",
+];
   const [products, setProducts] = useState(initialProducts);
   const [cart, setCart] = useState([]);
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("Todo");
+  const [selectedMakeupBrand, setSelectedMakeupBrand] = useState("Todas");
   const [selected, setSelected] = useState(null);
   const [cartOpen, setCartOpen] = useState(false);
 
@@ -229,18 +269,23 @@ useEffect(() => {
   localStorage.setItem("boutique_cart", JSON.stringify(cart));
 }, [cart]);
 
-  const filteredProducts = useMemo(() => {
-    return products.filter((product) => {
-      const matchesCategory =
-        category === "Todo" || product.category === category;
+ const filteredProducts = useMemo(() => {
+  return products.filter((product) => {
+    const matchesCategory =
+      category === "Todo" || product.category === category;
 
-      const matchesSearch =
-        product.name.toLowerCase().includes(query.toLowerCase()) ||
-        product.description.toLowerCase().includes(query.toLowerCase());
+    const matchesSearch =
+      product.name.toLowerCase().includes(query.toLowerCase()) ||
+      product.description.toLowerCase().includes(query.toLowerCase());
 
-      return matchesCategory && matchesSearch;
-    });
-  }, [products, category, query]);
+    const matchesBrand =
+      category !== "Maquillaje" ||
+      selectedMakeupBrand === "Todas" ||
+      product.brand === selectedMakeupBrand;
+
+    return matchesCategory && matchesSearch && matchesBrand;
+  });
+}, [products, category, query, selectedMakeupBrand]);
 
   const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
   const subtotal = total;
@@ -537,6 +582,23 @@ Alessandra Reséndiz Díaz`
                 </button>
               ))}
             </div>
+            {category === "Maquillaje" && (
+  <div className="mb-6 flex gap-2 overflow-x-auto pb-2">
+    {["Todas", ...makeupBrands].map((brand) => (
+      <button
+        key={brand}
+        onClick={() => setSelectedMakeupBrand(brand)}
+        className={`whitespace-nowrap rounded-full px-4 py-2 text-sm font-semibold ${
+          selectedMakeupBrand === brand
+            ? "bg-[#6f2b2f] text-white"
+            : "border border-[#6f2b2f]/15 bg-white/50 text-[#6f2b2f]"
+        }`}
+      >
+        {brand}
+      </button>
+    ))}
+  </div>
+)}
 
             <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
               {filteredProducts.map((item) => (

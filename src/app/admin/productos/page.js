@@ -20,6 +20,45 @@ const categories = [
   "Ropa y bolsas",
   "Accesorios",
 ];
+const makeupBrands = [
+  "Rare Beauty",
+  "Fenty Beauty",
+  "MAC Cosmetics",
+  "Huda Beauty",
+  "Anastasia Beverly Hills",
+  "NARS",
+  "Too Faced",
+  "Urban Decay",
+  "Charlotte Tilbury",
+  "e.l.f. Cosmetics",
+  "Maybelline New York",
+  "L'Oréal Paris",
+  "NYX Professional Makeup",
+  "Revlon",
+  "Bissú",
+  "Pink Up",
+  "Beauty Creations",
+  "Rimmel London",
+  "Morphe",
+  "Benefit Cosmetics",
+  "Clinique",
+  "Estée Lauder",
+  "Lancôme",
+  "Dior Beauty",
+  "Chanel Beauty",
+  "Yves Saint Laurent Beauty",
+  "Giorgio Armani Beauty",
+  "Pat McGrath Labs",
+  "Natasha Denona",
+  "Saie",
+  "Makeup by Mario",
+  "Laura Mercier",
+  "Hourglass",
+  "Shiseido",
+  "KIKO MILANO",
+  "rhode",
+  "Patrick Ta Beauté",
+];
 function getStockStatus(stock) {
   const value = Number(stock);
 
@@ -86,6 +125,7 @@ useEffect(() => {
     await updateDoc(doc(db, "products", id), {
       name: editProduct.name,
       category: editProduct.category,
+       brand: editProduct.category === "Maquillaje" ? editProduct.brand || "" : "",
       price: Number(editProduct.price),
       stock: Number(editProduct.stock),
       description: editProduct.description,
@@ -199,6 +239,22 @@ useEffect(() => {
                                 </option>
                               ))}
                             </select>
+                            {editProduct.category === "Maquillaje" && (
+  <select
+    name="brand"
+    value={editProduct.brand || ""}
+    onChange={handleChange}
+    className="rounded-xl border p-3 text-[#6f2b2f]"
+  >
+    <option value="">Selecciona una marca</option>
+
+    {makeupBrands.map((brand) => (
+      <option key={brand} value={brand}>
+        {brand}
+      </option>
+    ))}
+  </select>
+)}
 
                             <input
                               type="number"
