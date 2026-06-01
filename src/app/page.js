@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import {
   collection,
@@ -360,11 +361,18 @@ Alessandra Reséndiz Díaz`
       <header className="sticky top-0 z-40 border-b border-[#6f2b2f]/10 bg-[#fbf5ea]/80 backdrop-blur-xl">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4">
           <div className="flex items-center gap-3">
-           <button onClick={handleSecretAdmin}
-           className="grid h-12 w-12 place-items-center rounded-full border border-[#6f2b2f]/20 bg-white font-serif text-xl text-[#6f2b2f]"
-           >
-             M
-             </button>
+           <button
+  onClick={handleSecretAdmin}
+  className="overflow-hidden rounded-full border border-[#6f2b2f]/20 bg-white"
+>
+  <Image
+    src="/logo-ma.png"
+    alt="M. Atelier & Co."
+    width={48}
+    height={48}
+    className="h-12 w-12 object-cover"
+  />
+</button>
 
             <div>
               <h1 className="font-serif text-xl tracking-wide text-[#6f2b2f]">
