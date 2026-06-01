@@ -205,16 +205,28 @@ function handleSecretAdmin() {
     }
   }
 
-  const savedCart = localStorage.getItem("boutique_cart");
-  if (savedCart) setCart(JSON.parse(savedCart));
-
+  if (localStorage.getItem("orderSent") === "true") {
+  setCart([]);
+  localStorage.removeItem("boutique_cart");
+  localStorage.removeItem("orderSent");
+  setCartOpen(false);
   loadProducts();
+  return;
+}
+
+const savedCart = localStorage.getItem("boutique_cart");
+if (savedCart) setCart(JSON.parse(savedCart));
+
+loadProducts();
+  
 }, []);
 
 
-  useEffect(() => {
-    localStorage.setItem("boutique_cart", JSON.stringify(cart));
-  }, [cart]);
+useEffect(() => {
+  if (localStorage.getItem("orderSent") === "true") return;
+
+  localStorage.setItem("boutique_cart", JSON.stringify(cart));
+}, [cart]);
 
   const filteredProducts = useMemo(() => {
     return products.filter((product) => {
@@ -296,8 +308,13 @@ const sendOrder = async () => {
         stock: newStock < 0 ? 0 : newStock,
       });
     }
+const whatsappUrl = `https://wa.me/525524817183?text=${whatsappText}`;
 
-    window.location.href = `https://wa.me/525524817183?text=${whatsappText}`;
+localStorage.setItem("orderSent", "true");
+localStorage.removeItem("boutique_cart");
+setCart([]);
+
+window.location.href = whatsappUrl;
   } catch (error) {
     console.error(error);
     alert("Error al guardar el pedido o actualizar stock.");
