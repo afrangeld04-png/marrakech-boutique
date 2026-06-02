@@ -112,22 +112,22 @@ const categories = [
 
 const rules = [
   "Todo se pide con anticipo previo.",
-  "No hay cambios.",
+  "No hay cambios , ni devoluciones.",
   "Pago de contado o contra entrega.",
   "No hay apartados sin depósito.",
-  "Envía tu comprobante.",
-  "Pregunta disponibilidad antes de depositar.",
+  "Envía tu comprobante de pago.",
+  "Revisa el stock disponible.",
   "Revisa tu mercancía al momento de entrega.",
-  "No hay reembolsos.",
+  "solo se realizan entregas en los puntos indicados.",
 ];
 
 const deliveryPoints = [
   "Cualquier estación Mexibús L2 y L1",
-  "UVM Hispano",
   "ETAC Zarzaparrillas",
   "Visma Gym",
-  "Mercado de Villa",
-  "Canosas",
+  "Mercado de Villa de Las Flores",
+  "Calle Canosas",
+  "Envio Por Didi o Uber",
 ];
 
 function money(value) {
@@ -716,7 +716,11 @@ Alessandra Reséndiz Díaz`
                 <p className="rounded-2xl bg-[#fbf5ea] p-4 font-semibold">
                   Efectivo
                 </p>
+              <p className="rounded-2xl bg-[#fbf5ea] p-4 font-semibold">
+                  ApplePay
+                </p>
               </div>
+              
             </div>
 
             <div className="rounded-[3rem] bg-white p-8 shadow-lg shadow-[#6f2b2f]/10 md:col-span-2">
@@ -754,13 +758,13 @@ Alessandra Reséndiz Díaz`
               {[
                 [
                   Lock,
-                  "Anticipo 50%",
+                  "Anticipo del 50% del total del pedido",
                   "Todo pedido requiere depósito del 50% y liquidación antes o contra entrega.",
                 ],
                 [
                   PackageCheck,
                   "Ticket de compra",
-                  "El pedido se toma en cuenta cuando se envía el ticket y se autoriza como está.",
+                  "El pedido se toma en cuenta cuando se realiza el envio del ticket y se autoriza como está.",
                 ],
                 [
                   Truck,
