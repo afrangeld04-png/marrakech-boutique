@@ -59,6 +59,12 @@ const makeupBrands = [
   "rhode",
   "Patrick Ta Beauté",
 ];
+const accessoryTypes = [
+  "Termos",
+  "Bath&Body Works",
+  "Lentes",
+  "Charm bar",
+];
 function getStockStatus(stock) {
   const value = Number(stock);
 
@@ -126,6 +132,10 @@ useEffect(() => {
       name: editProduct.name,
       category: editProduct.category,
        brand: editProduct.category === "Maquillaje" ? editProduct.brand || "" : "",
+       accessoryType:
+  editProduct.category === "Accesorios"
+    ? editProduct.accessoryType || ""
+    : "",
       price: Number(editProduct.price),
       stock: Number(editProduct.stock),
       description: editProduct.description,
@@ -251,6 +261,23 @@ useEffect(() => {
     {makeupBrands.map((brand) => (
       <option key={brand} value={brand}>
         {brand}
+      </option>
+    ))}
+  </select>
+  
+)}
+{editProduct.category === "Accesorios" && (
+  <select
+    name="accessoryType"
+    value={editProduct.accessoryType || ""}
+    onChange={handleChange}
+    className="rounded-xl border p-3 text-[#6f2b2f]"
+  >
+    <option value="">Selecciona un tipo de accesorio</option>
+
+    {accessoryTypes.map((type) => (
+      <option key={type} value={type}>
+        {type}
       </option>
     ))}
   </select>

@@ -101,13 +101,22 @@ const initialProducts = [
   },
 ];
 
-const categories = [
+ const categories = [
   "Todo",
   "Joyería",
-  "Ropa y bolsas",
+  "Bolsas",
+  "Ropa",
   "Maquillaje",
   "Accesorios celular",
   "Accesorios",
+  "Perfumería",
+];
+const accessoryTypes = [
+  "Todos",
+  "Termos",
+  "Bath&Body Works",
+  "Lentes",
+  "Charm bar",
 ];
 
 const rules = [
@@ -182,6 +191,7 @@ export default function Home() {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("Todo");
   const [selectedMakeupBrand, setSelectedMakeupBrand] = useState("Todas");
+  const [selectedAccessoryType, setSelectedAccessoryType] = useState("Todos");
   const [selected, setSelected] = useState(null);
   const [cartOpen, setCartOpen] = useState(false);
 
@@ -283,9 +293,23 @@ useEffect(() => {
       selectedMakeupBrand === "Todas" ||
       product.brand === selectedMakeupBrand;
 
-    return matchesCategory && matchesSearch && matchesBrand;
+      const matchesAccessoryType =
+  category !== "Accesorios" ||
+  selectedAccessoryType === "Todos" ||
+  product.accessoryType === selectedAccessoryType;
+
+    return (
+  matchesCategory &&
+  matchesSearch &&
+  matchesBrand &&
+  matchesAccessoryType
+);
   });
-}, [products, category, query, selectedMakeupBrand]);
+}, [ products,
+  category,
+  query,
+  selectedMakeupBrand,
+  selectedAccessoryType,]);
 
   const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
   const subtotal = total;
@@ -523,25 +547,27 @@ Alessandra Reséndiz Díaz`
         </section>
 
         <section className="px-5 pb-12">
-          <div className="mx-auto grid max-w-7xl gap-4 md:grid-cols-4">
-            {[
-              [Gem, "Joyería", "Piezas delicadas y combinables"],
-              [Palette, "Maquillaje", "Lo más deseado en belleza"],
-              [Smartphone, "Celular", "Fundas y accesorios "],
-              [Shirt, "Ropa", "Bolsas, prendas y básicos "],
-            ].map(([Icon, title, text]) => (
-              <div
-                key={title}
-                className="rounded-[2rem] border border-[#6f2b2f]/10 bg-white/40 p-6"
-              >
-                <Icon className="mb-5 text-[#6f2b2f]" />
-                <h3 className="font-serif text-2xl text-[#6f2b2f]">
-                  {title}
-                </h3>
-                <p className="mt-2 text-sm text-[#2c2020]/65">{text}</p>
-              </div>
-            ))}
-          </div>
+          <div className="mx-auto grid max-w-7xl gap-4 md:grid-cols-2 lg:grid-cols-3">
+  {[
+    [Gem, "Joyería", "Piezas delicadas y combinables"],
+    [Palette, "Maquillaje", "Lo más deseado en belleza"],
+    [Smartphone, "Celular", "Fundas y accesorios"],
+    [ShoppingBag, "Bolsas", "Bolsas y accesorios en tendencia"],
+    [Shirt, "Ropa", "Prendas y básicos para tu estilo"],
+    [Sparkles, "Perfumería", "Fragancias para cada ocasión"],
+  ].map(([Icon, title, text]) => (
+    <div
+      key={title}
+      className="rounded-[2rem] border border-[#6f2b2f]/10 bg-white/40 p-6"
+    >
+      <Icon className="mb-5 text-[#6f2b2f]" />
+      <h3 className="font-serif text-2xl text-[#6f2b2f]">
+        {title}
+      </h3>
+      <p className="mt-2 text-sm text-[#2c2020]/65">{text}</p>
+    </div>
+  ))}
+</div>
         </section>
 
         <section id="productos" className="px-5 py-16">
@@ -595,6 +621,23 @@ Alessandra Reséndiz Díaz`
         }`}
       >
         {brand}
+      </button>
+    ))}
+  </div>
+)}
+{category === "Accesorios" && (
+  <div className="mb-6 flex gap-2 overflow-x-auto pb-2">
+    {accessoryTypes.map((type) => (
+      <button
+        key={type}
+        onClick={() => setSelectedAccessoryType(type)}
+        className={`whitespace-nowrap rounded-full px-4 py-2 text-sm font-semibold ${
+          selectedAccessoryType === type
+            ? "bg-[#6f2b2f] text-white"
+            : "border border-[#6f2b2f]/15 bg-white/50 text-[#6f2b2f]"
+        }`}
+      >
+        {type}
       </button>
     ))}
   </div>

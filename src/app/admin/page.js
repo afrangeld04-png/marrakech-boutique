@@ -80,6 +80,12 @@ const makeupBrands = [
   "rhode",
   "Patrick Ta Beauté",
 ];
+const accessoryTypes = [
+  "Termos",
+  "Bath&Body Works",
+  "Lentes",
+  "Charm bar",
+];
   const inputClass =
     "rounded-2xl bg-white border border-[#6f2b2f]/20 p-4 outline-none text-[#6f2b2f] placeholder:text-[#6f2b2f]/55 focus:border-[#6f2b2f]/60 focus:ring-2 focus:ring-[#6f2b2f]/10";
 
@@ -172,6 +178,7 @@ setLowStockProducts(lowStock);
         name: product.name,
         category: product.category,
         brand: product.category === "Maquillaje" ? product.brand : "",
+        accessoryType: product.category === "Accesorios" ? product.accessoryType : "",
         price: Number(product.price),
         stock: Number(product.stock),
         image: product.image,
@@ -189,6 +196,7 @@ setLowStockProducts(lowStock);
         stock: "",
         image: "",
         description: "",
+        accessoryType: "",
       });
 
       await loadLowStockProducts();
@@ -369,6 +377,23 @@ setLowStockProducts(lowStock);
     {makeupBrands.map((brand) => (
       <option key={brand} value={brand}>
         {brand}
+      </option>
+    ))}
+  </select>
+  
+)}
+{product.category === "Accesorios" && (
+  <select
+    name="accessoryType"
+    value={product.accessoryType || ""}
+    onChange={handleChange}
+    className={inputClass}
+  >
+    <option value="">Selecciona un tipo de accesorio</option>
+
+    {accessoryTypes.map((type) => (
+      <option key={type} value={type}>
+        {type}
       </option>
     ))}
   </select>
