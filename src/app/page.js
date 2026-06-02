@@ -118,7 +118,7 @@ const rules = [
   "Envía tu comprobante de pago.",
   "Revisa el stock disponible.",
   "Revisa tu mercancía al momento de entrega.",
-  "solo se realizan entregas en los puntos indicados.",
+  "Solo se realizan entregas en los puntos indicados.",
 ];
 
 const deliveryPoints = [
