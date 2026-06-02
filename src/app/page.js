@@ -527,8 +527,8 @@ Alessandra Reséndiz Díaz`
             {[
               [Gem, "Joyería", "Piezas delicadas y combinables"],
               [Palette, "Maquillaje", "Lo más deseado en belleza"],
-              [Smartphone, "Celular", "Fundas y accesorios aesthetic"],
-              [Shirt, "Ropa", "Bolsas, prendas y básicos cute"],
+              [Smartphone, "Celular", "Fundas y accesorios "],
+              [Shirt, "Ropa", "Bolsas, prendas y básicos "],
             ].map(([Icon, title, text]) => (
               <div
                 key={title}
