@@ -467,12 +467,12 @@ Alessandra Reséndiz Díaz`
               </div>
 
               <h2 className="font-serif text-5xl leading-tight text-[#6f2b2f] md:text-7xl">
-                M. Atelier & Co.Luxury Boutique Only Online
+                M. Atelier & Co. Boutique 
               </h2>
 
               <p className="mt-6 max-w-xl text-lg leading-8 text-[#2c2020]/70">
-                Joyería, ropa, maquillaje y accesorios para celular con una
-                experiencia minimalista, elegante y fácil de usar.
+                M. Atelier & Co. nace de la pasión por los detalles que marcan la diferencia, 
+                donde la elegancia y el buen gusto se encuentran de forma natural.
               </p>
 
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
