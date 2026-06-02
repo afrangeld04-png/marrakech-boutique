@@ -526,7 +526,7 @@ Alessandra Reséndiz Díaz`
           <div className="mx-auto grid max-w-7xl gap-4 md:grid-cols-4">
             {[
               [Gem, "Joyería", "Piezas delicadas y combinables"],
-              [Palette, "Maquillaje", "Gloss, lip oil y tonos virales"],
+              [Palette, "Maquillaje", "Lo más deseado en belleza"],
               [Smartphone, "Celular", "Fundas y accesorios aesthetic"],
               [Shirt, "Ropa", "Bolsas, prendas y básicos cute"],
             ].map(([Icon, title, text]) => (
